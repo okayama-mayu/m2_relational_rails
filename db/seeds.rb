@@ -16,8 +16,25 @@ drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1
 kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
 phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
 
 vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
 
 sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
 sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+drinks.items.create!(name: 'soda', need_restock: false, price: 3)
+drinks.items.create!(name: 'beer', need_restock: false, price: 5)
+
+kids.items.create!(name: 'grilled cheese', need_restock: false, price: 6)
+kids.items.create!(name: 'vegan grilled cheese', need_restock: false, price: 8)
+
+
+
+
+
+

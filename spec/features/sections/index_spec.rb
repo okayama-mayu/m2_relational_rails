@@ -13,7 +13,7 @@ RSpec.describe 'the parents index page', type: :feature do
         section4 = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         section5 = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        visit '/parents' 
+        visit '/sections' 
 
         expect(page).to have_content(section1.name)
         expect(page).to have_content(section2.name)
