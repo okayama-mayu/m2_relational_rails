@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get '/parents', to: 'sections#index'
-  get '/parents/:id', to: 'sections#show'
-  get '/child_table_name', to: 'items#index'
-  get '/child_table_name/:id', to: 'items#show' 
+  get '/sections', to: 'sections#index'
+  get '/sections/:id', to: 'sections#show'
+  get '/items', to: 'items#index'
+  get '/items/:id', to: 'items#show' 
 end

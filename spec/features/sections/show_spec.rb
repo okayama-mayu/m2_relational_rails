@@ -9,7 +9,7 @@ RSpec.describe 'the section show page', type: :feature do
     it 'shows the sections name, whether it has vegan options, and the level of labor intensity required' do 
         section1 = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
 
-        visit "/parents/#{section1.id}"
+        visit "/sections/#{section1.id}"
 
         expect(page).to have_content(section1.name)
         expect(page).to have_content(section1.vegan_options)
