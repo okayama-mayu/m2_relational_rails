@@ -24,7 +24,7 @@ RSpec.describe 'the child index page', type: :feature do
         expect(page).to have_content(item4.name)
         expect(page).to have_content(item1.need_restock)
         expect(page).to have_content(item2.price)
-        expect(page).to have_content(item3.section_id)
+        expect(page).to have_content(item3.section.name)
         expect(page).to have_content(item4.need_restock)
     end
 end
