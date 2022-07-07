@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   get '/parents', to: 'sections#index'
   get '/parents/:id', to: 'sections#show'
   get '/child_table_name', to: 'items#index'
+  get '/child_table_name/:id', to: 'items#show' 
 end

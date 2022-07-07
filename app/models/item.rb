@@ -3,5 +3,5 @@ class Item < ApplicationRecord
 
     validates_presence_of :name, :price
 
-    validates :need_restock, inclusion: { in: [true, false] }
+    validates :need_restock, inclusion: [true, false]
 end

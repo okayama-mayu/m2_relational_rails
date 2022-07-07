@@ -3,5 +3,5 @@ class Section < ApplicationRecord
     
     validates_presence_of :name, :labor_intensity
 
-    validates :vegan_options, inclusion: { in: [true, false] }
+    validates :vegan_options, inclusion: [true, false]
 end
