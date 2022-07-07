@@ -1,0 +1,4 @@
+<h1><%= @item.name %></h1>
+<p>Menu Section: <%= @item.section.name %></p>
+<p>Needs Restock: <%= @item.need_restock %></p>
+<p>Price: <%= number_to_currency(@item.price) %></p>
