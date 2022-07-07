@@ -5,7 +5,7 @@ class Section < ApplicationRecord
 
     validates :vegan_options, inclusion: [true, false]
 
-    def order_by_time_created
-        binding.pry 
+    def self.order_by_time_created
+        order(created_at: :desc)
     end
 end

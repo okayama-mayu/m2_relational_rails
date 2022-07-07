@@ -1,6 +1,6 @@
 class SectionsController < ApplicationController
     def index 
-        @sections = Section.all 
+        @sections = Section.all.order_by_time_created
     end
 
     def show
