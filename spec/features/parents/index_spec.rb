@@ -14,7 +14,6 @@ RSpec.describe 'the parents index page', type: :feature do
         section5 = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
         visit '/parents' 
-        save_and_open_page
 
         expect(page).to have_content(section1.name)
         expect(page).to have_content(section2.name)
