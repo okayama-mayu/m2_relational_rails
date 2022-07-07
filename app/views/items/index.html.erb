@@ -1,0 +1,7 @@
+<h1>Menu Items</h1>
+<% @items.each do |item| %>
+    <h3><%= item.name %></h3>
+    <p>Menu Section: <%= item.section.name %></p>
+    <p>Needs Restock: <%= item.need_restock %></p>
+    <p>Price: <%= number_to_currency(item.price) %></p>
+<% end %>
