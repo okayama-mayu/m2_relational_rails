@@ -1,5 +1,7 @@
 class Item < ApplicationRecord
     belongs_to :section 
 
-    validates_presence_of :name, :need_restock, :price
+    validates_presence_of :name, :price
+
+    validates :need_restock, inclusion: { in: [true, false] }
 end
