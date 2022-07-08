@@ -1,0 +1,28 @@
+<h1>New Menu Section</h1>
+
+<%= form_with url: '/sections', method: :post, local: true do |form| %>
+    <%= form.label :name, "Menu Section Name:" %>
+    <%= form.text_field :name %><br><br>
+
+    <%= form.check_box :vegan_options %>
+    <%= form.label :vegan_options, "Has vegan options (check if yes)" %><br><br>
+
+    <%= form.label :labor_intensity, "Level of labor intensity required on a 1 to 5 scale:" %>
+    <%= form.number_field :labor_intensity, in: 1..5, step:1 %><br><br>
+    
+
+    <%= form.submit "Submit" %>
+<% end %>
+
+<!-- <form action="/sections" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <p>Please enter the details regarding the new menu section: </p>
+    <label for="name">Menu Section Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <input type="checkbox" name="vegan_options" id="vegan_options">
+    <label for="vegan_options">Has vegan options (check if yes) </label><br><br>
+    <label for="labor_intensity">Level of labor intensity required on a 1 to 5 scale: </label>
+    <input type="number" min="1" step="1" max="5" id="labor_intensity" name="labor_intensity"><br><br>
+    <input type="submit" value="Submit">
+</form> -->
+
