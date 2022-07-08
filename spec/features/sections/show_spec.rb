@@ -95,14 +95,14 @@ RSpec.describe 'the section show page', type: :feature do
         phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
 
         visit "/sections/#{phillys.id}"
-        save_and_open_page
+        # save_and_open_page
 
         within('#top-of-page') do
             expect(page).to have_link("See All Menu Sections")
         end
     end
 
-    xit 'allows you to navigate to the Section Index if link is clicked' do 
+    it 'allows you to navigate to the Section Index if link is clicked' do 
         Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
