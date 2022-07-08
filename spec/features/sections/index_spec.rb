@@ -112,7 +112,7 @@ RSpec.describe 'the parents index page', type: :feature do
         end
     end
 
-    xit 'allows you to navigate to the Item Index if link is clikced' do 
+    it 'allows you to navigate to the Item Index if link is clikced' do 
         Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
@@ -129,6 +129,7 @@ RSpec.describe 'the parents index page', type: :feature do
 
         visit "/sections"
         click_link "See All Items"
+        # save_and_open_page
 
         expect(current_path).to eq('/items')
         expect(page).to have_content(item1.name)
