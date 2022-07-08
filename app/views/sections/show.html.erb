@@ -9,7 +9,7 @@
 
 <a href="/sections/<%= @section.id %>/items">See All Items in this Menu Section</a> <br><br>
 
-<a href="/sections/<%= @section.id %>/edit">Update This Menu Section </a>
+<%= link_to "Update This Menu Section", "/sections/#{@section.id}/edit"%>
 
 
 
