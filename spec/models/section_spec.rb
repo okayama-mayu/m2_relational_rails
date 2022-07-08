@@ -24,5 +24,16 @@ RSpec.describe Section, type: :model do
                 expect(sections.order_by_time_created.last.name).to eq 'Phillys'        
             end
         end
+
+        describe '#total_items' do 
+            it 'returns the number of Items associated with a Section' do 
+                phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+
+                phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+                phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+                expect(phillys.total_items).to eq 2 
+            end
+        end
     end
 end
