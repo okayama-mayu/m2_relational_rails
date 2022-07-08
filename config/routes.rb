@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/sections', to: 'sections#index'
   get '/sections/new', to: 'sections#new'
   get '/sections/:id', to: 'sections#show'
+  get '/sections/:id/edit', to: 'sections#edit' 
   get '/items', to: 'items#index'
   get '/items/:id', to: 'items#show' 
   get '/sections/:section_id/items', to: 'section_items#index' 

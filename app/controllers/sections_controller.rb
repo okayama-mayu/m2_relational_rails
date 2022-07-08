@@ -20,4 +20,8 @@ class SectionsController < ApplicationController
     def artist_params
         params.permit(:name, :vegan_options, :labor_intensity)
     end
+
+    def edit
+        
+    end
 end
