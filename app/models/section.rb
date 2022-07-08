@@ -8,4 +8,8 @@ class Section < ApplicationRecord
     def self.order_by_time_created
         order(created_at: :desc)
     end
+
+    def total_items
+        items.count 
+    end
 end
