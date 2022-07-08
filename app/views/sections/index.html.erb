@@ -1,7 +1,5 @@
 <h1> Menu Sections </h1>
 <% @sections.each_with_index do |section, index| %>
     <div id="section-<%= index %>">
-    <p><b><%= section.name %></p></b>
-    <p>Created at: <%= section.created_at %></p>
-    </div>
+    <p><b><%= section.name %></b><span id="section-<%= index %>b">  Created at: <%= section.created_at %></span></div>
 <% end %>

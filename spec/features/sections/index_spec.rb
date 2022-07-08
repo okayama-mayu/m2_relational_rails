@@ -29,6 +29,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # I see that records are ordered by most recently created first
     # And next to each of the records I see when it was created
     it 'orders the Sections by most recently created first' do 
+        Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -36,7 +37,7 @@ RSpec.describe 'the parents index page', type: :feature do
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
         visit '/sections' 
-        save_and_open_page
+        # save_and_open_page
 
         within('#section-0') do 
             expect(page).to have_content("Kids")
@@ -59,5 +60,35 @@ RSpec.describe 'the parents index page', type: :feature do
         end
     end
 
-    it 'shows when the Section was created next to each Section' 
+    it 'shows when the Section was created next to each Section' do
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+        kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
+
+        visit '/sections'
+        save_and_open_page
+
+        within('#section-0b') do 
+            expect(page).to have_content(kids.created_at)
+        end
+
+        within('#section-1b') do 
+            expect(page).to have_content(drinks.created_at)
+        end
+
+        within('#section-2b') do 
+            expect(page).to have_content(sides.created_at)
+        end
+
+        within('#section-3b') do 
+            expect(page).to have_content(vegan_phillys.created_at)
+        end
+
+        within('#section-4b') do 
+            expect(page).to have_content(phillys.created_at)
+        end
+    end
 end
