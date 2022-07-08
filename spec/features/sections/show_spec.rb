@@ -70,7 +70,7 @@ RSpec.describe 'the section show page', type: :feature do
 
         visit "/sections/#{phillys.id}"
         click_link "See All Items"
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq('/items')
         expect(page).to have_content(item1.name)
@@ -120,5 +120,42 @@ RSpec.describe 'the section show page', type: :feature do
         expect(page).to have_content(sides.name)
         expect(page).to have_content(drinks.name)
         expect(page).to have_content(kids.name)
+    end
+
+    # User Story 10, Parent Child Index Link
+    # As a visitor
+    # When I visit a parent show page ('/parents/:id')
+    # Then I see a link to take me to that parent's `child_table_name` page ('/parents/:id/child_table_name')
+    it 'shows the link to the Sections Items page' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item2= phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+        visit "/sections/#{phillys.id}"
+        # save_and_open_page
+        
+        expect(page).to have_link("See All Items in this Menu Section")
+    end
+
+    it 'allows you to navigate to the Section Items page if link is clicked' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item2= phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+        visit "/sections/#{phillys.id}"
+        click_link "See All Items in this Menu Section"
+        # save_and_open_page
+        
+        expect(current_path).to eq("/sections/#{phillys.id}/items")
+        expect(page).to have_content(item1.name)
+        expect(page).to have_content(item2.name)
+        expect(page).to have_content(item1.need_restock)
+        expect(page).to have_content(item2.price)
     end
 end
