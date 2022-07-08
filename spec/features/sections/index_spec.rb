@@ -181,4 +181,45 @@ RSpec.describe 'the parents index page', type: :feature do
         expect(page).to have_content(drinks.name)
         expect(page).to have_content(kids.name)
     end
+
+    # User Story 11, Parent Creation 
+    # As a visitor
+    # When I visit the Parent Index page
+    # Then I see a link to create a new Parent record, "New Parent"
+    # When I click this link
+    # Then I am taken to '/parents/new' where I  see a form for a new parent record
+    # When I fill out the form with a new parent's attributes:
+    # And I click the button "Create Parent" to submit the form
+    # Then a `POST` request is sent to the '/parents' route,
+    # a new parent record is created,
+    # and I am redirected to the Parent Index page where I see the new Parent displayed.
+    it 'has a link to create a new Section' do 
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections"
+        # save_and_open_page
+
+        expect(page).to have_link("Create New Menu Section")
+    end
+
+    it 'has a link that takes you to a form for a new Section record' do 
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections"
+        click_link "Create New Menu Section"
+        # save_and_open_page
+
+        expect(current_path).to eq('/sections/new')
+        expect(page).to have_content("New Menu Section")
+        expect(page).to have_field("Menu Section Name")
+        expect(page).to have_field("vegan_options")
+        expect(page).to have_field("labor_intensity")
+        expect(page).to have_button("Submit")
+    end
 end
