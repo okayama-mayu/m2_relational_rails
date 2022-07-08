@@ -66,7 +66,7 @@ RSpec.describe 'Section Items index' do
 
         visit "/sections/#{vegan_phillys.id}/items"
         click_link "See All Items"
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq('/items')
         expect(page).to have_content(item1.name)
