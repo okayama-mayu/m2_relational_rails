@@ -55,5 +55,25 @@ RSpec.describe Item, type: :model do
                 expect(sides.items.alpha_sort.last).to eq vegan_poutine                 
             end
         end
+
+        describe '#min_filter' do 
+            it 'returns Items whose prices are greater than or equal to the paramter' do 
+                Item.destroy_all
+                Section.destroy_all
+                phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+                item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+                item2 = phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+                item3 = phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+                item4 = phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+                item5 = phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+                items = Item.all 
+
+                expect(items.min_filter("12").count).to eq 3 
+                expect(items.min_filter("12").first).to eq item3 
+                expect(items.min_filter("12")[1]).to eq item4
+                expect(items.min_filter("12").last).to eq item5
+            end
+        end
     end
 end

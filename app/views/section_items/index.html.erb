@@ -3,6 +3,17 @@
 </div>
 
 <h1><%= @section.name %> Menu Items</h1>
+
+<%= link_to "Sort Items in Alphabetical Order", "/sections/#{@section.id}/items?sort=active", method: :get %> 
+<br>
+
+<%= form_with url: "/sections/#{@section.id}/items/minimum", method: :post, local: true do |form| %>
+    <%= form.label :minimum, "Only show items with minimum price of: $"%>
+    <%= form.number_field :minimum %>
+
+    <%= form.submit "Submit" %>
+<% end %>
+
 <% @items.each_with_index do |item, index| %>
     <div id="item-<%= index %>">
     <h4><%= item.name %></h4>
@@ -13,5 +24,3 @@
 <% end %>
 
 <%= link_to "Add New Menu Item to #{@section.name} Section", "/sections/#{@section.id}/items/new" %><br><br>
-
-<%= link_to "Sort Items in Alphabetical Order", "/sections/#{@section.id}/items?sort=active", method: :get %>

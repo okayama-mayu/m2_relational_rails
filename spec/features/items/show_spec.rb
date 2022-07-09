@@ -173,7 +173,7 @@ RSpec.describe 'the item show page', type: :feature do
 
         visit "/items/#{item.id}"
         click_button "Delete Item" 
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq "/items" 
         expect(page).to_not have_content(item.name)

@@ -12,4 +12,8 @@ class Item < ApplicationRecord
     def self.alpha_sort
         Item.order(:name)
     end
+
+    def self.min_filter(min)
+        Item.where("price >= #{min.to_i}")
+    end
 end
