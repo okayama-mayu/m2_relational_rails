@@ -27,6 +27,12 @@ class SectionsController < ApplicationController
         redirect_to "/sections/#{params[:section_id]}"
     end
 
+    def destroy
+        section = Section.find(params[:section_id])
+        section.destroy
+        redirect_to "/sections" 
+    end
+
 private 
     def section_params
         params.permit(:name, :vegan_options, :labor_intensity)

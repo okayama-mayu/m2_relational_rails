@@ -61,11 +61,11 @@ RSpec.describe 'the section show page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/sections/#{phillys.id}"
@@ -198,5 +198,67 @@ RSpec.describe 'the section show page', type: :feature do
         click_link("Update This Menu Section")
 
         expect(current_path).to eq("/sections/#{sides.id}/edit")
+    end
+
+    # User Story 19, Parent Delete 
+    # As a visitor
+    # When I visit a parent show page
+    # Then I see a link to delete the parent
+    # When I click the link "Delete Parent"
+    # Then a 'DELETE' request is sent to '/parents/:id',
+    # the parent is deleted, and all child records are deleted
+    # and I am redirected to the parent index page where I no longer see this parent
+    it 'has a button to delete Section' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections/#{vegan_phillys.id}"
+        # save_and_open_page
+
+        expect(page).to have_button("Delete This Menu Section")
+    end
+
+    it 'has a button to delete Section, and clicking on the button redirects to the parent index page where the deleted Section is no longer visible' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections/#{vegan_phillys.id}"
+        click_button "Delete This Menu Section"
+        save_and_open_page
+
+        expect(current_path).to eq('/sections')
+        expect(page).to_not have_content(vegan_phillys.name)
+    end
+
+    it 'has a button to delete Section, and clicking on the button deletes all associated Items' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        vegan1 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan2 = vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan3 = vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+        visit "/items"
+
+        expect(page).to have_content(vegan1.name)
+        expect(page).to have_content(vegan2.name)
+        expect(page).to have_content(vegan3.name)
+
+        visit "/sections/#{vegan_phillys.id}"
+        click_button "Delete This Menu Section"
+        visit "/items"
+
+        expect(page).to_not have_content(vegan1.name)
+        expect(page).to_not have_content(vegan2.name)
+        expect(page).to_not have_content(vegan3.name)
     end
 end

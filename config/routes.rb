@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   post '/sections/:section_id/items', to: 'section_items#create'
   get '/items/:item_id/edit', to: 'items#edit' 
   patch '/items/:item_id', to: 'items#update'
+  delete '/sections/:section_id', to: 'sections#destroy' 
 end
