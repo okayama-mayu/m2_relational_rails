@@ -60,11 +60,11 @@ RSpec.describe 'Section Items index' do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/sections/#{vegan_phillys.id}/items"
@@ -152,5 +152,63 @@ RSpec.describe 'Section Items index' do
 
         click_link("Add New Menu Item to #{sides.name} Section")
         expect(current_path).to eq "/sections/#{sides.id}/items/new"
+    end
+
+    # User Story 16, Sort Parent's Children in Alphabetical Order by name 
+    # As a visitor
+    # When I visit the Parent's children Index Page
+    # Then I see a link to sort children in alphabetical order
+    # When I click on the link
+    # I'm taken back to the Parent's children Index Page where I see all of the parent's children in alphabetical order
+    it 'has a link to sort Items in alphabetical order' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        vegan_poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        fries = sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+        cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+        visit "/sections/#{sides.id}/items"
+        # save_and_open_page
+
+        expect(page).to have_button("Sort Items in Alphabetical Order")
+    end
+
+    it 'has a link that takes me to the Menu Section Items Index page' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        vegan_poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        fries = sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+        cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+        visit "/sections/#{sides.id}/items"
+        # visit "/sections/#{sides.id}/items?sort=active"
+        click_button "Sort Items in Alphabetical Order"
+        save_and_open_page
+
+        expect(current_path).to eq "/sections/#{sides.id}/items"
+
+        within('#item-0') do 
+            expect(page).to have_content(cheese_fries.name)
+        end
+
+        within('#item-1') do 
+            expect(page).to have_content(fries.name)
+        end
+
+        within('#item-2') do 
+            expect(page).to have_content(pickles.name)
+        end
+
+        within('#item-3') do 
+            expect(page).to have_content(vegan_poutine.name)
+        end
     end
 end
