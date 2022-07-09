@@ -8,3 +8,5 @@
 <p>Price: <%= number_to_currency(@item.price) %></p>
 
 <%= link_to "Update Item Details", "/items/#{@item.id}/edit" %>
+<br><br>
+<%= button_to "Delete Item", "/items/#{@item.id}", method: :delete %>
