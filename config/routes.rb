@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   patch '/sections/:section_id', to: 'sections#update'
   get '/sections/:section_id/items/new', to: 'section_items#new'
   post '/sections/:section_id/items', to: 'section_items#create'
+  get '/items/:item_id/edit', to: 'items#edit' 
+  patch '/items/:item_id', to: 'items#update'
 end

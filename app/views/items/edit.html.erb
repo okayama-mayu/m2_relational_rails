@@ -1,0 +1,14 @@
+<h1> Edit Menu Item </h1>
+
+<%= form_with url: "/items/#{@item.id}", method: :patch, local: true do |form| %> 
+    <%= form.label :name, "Menu Item Name:" %>
+    <%= form.text_field :name, value: @item.name %><br><br>
+
+    <%= form.check_box :need_restock, checked: @item.need_restock %>
+    <%= form.label :need_restock, "Does the menu item or its ingredients need to be restocked? Check if yes." %><br><br>
+
+    <%= form.label :price, "Menu Item Price: $" %>
+    <%= form.number_field :price, value: @item.price %><br><br>
+
+    <%= form.submit "Update Item" %>
+<% end %>
