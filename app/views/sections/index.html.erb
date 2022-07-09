@@ -7,8 +7,13 @@
     <div id="section-<%= index %>">
         <p>
         <b><%= section.name %></b>
+
         <span id="section-<%= index %>b">  Created at: <%= section.created_at %></span> 
-        <span id="section-<%= index %>c"><%= button_to "Edit #{section.name}", "/sections/#{section.id}/edit", method: :get %></span>
+
+        <span id="section-<%= index %>c">
+        <%= button_to "Edit #{section.name}", "/sections/#{section.id}/edit", method: :get %> 
+        <br>
+        <%= button_to "Delete #{section.name}", "/sections/#{section.id}", method: :delete %></span>
         </p>
     </div>
     <br>
