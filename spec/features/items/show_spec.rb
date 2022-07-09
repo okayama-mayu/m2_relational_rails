@@ -56,11 +56,11 @@ RSpec.describe 'the item show page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/items/#{item1.id}"
@@ -134,7 +134,7 @@ RSpec.describe 'the item show page', type: :feature do
         Item.destroy_all
         Section.destroy_all
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
-        item = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
 
         visit "/items/#{item.id}"
         # save_and_open_page

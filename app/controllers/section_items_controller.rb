@@ -1,7 +1,11 @@
 class SectionItemsController < ApplicationController 
     def index 
         @section = Section.find(params[:section_id])
-        @items = @section.items 
+        if params[:sort] == "active" 
+            @items = @section.items.alpha_sort 
+        else 
+            @items = @section.items 
+        end
     end
 
     def new 

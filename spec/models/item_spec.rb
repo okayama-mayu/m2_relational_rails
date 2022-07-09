@@ -36,5 +36,24 @@ RSpec.describe Item, type: :model do
                 expect(items.needs_restock_only).not_to include(philly2)
             end
         end
+        
+        describe '#alpha_sort' do 
+            it 'sorts the items in alphabetical order' do 
+                Item.destroy_all
+                Section.destroy_all
+
+                sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+                pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+                vegan_poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+                fries = sides.items.create!(name: 'Fries', need_restock: true, price: 4)
+                cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: true, price: 7)
+
+                expect(sides.items.alpha_sort.first).to eq cheese_fries
+                expect(sides.items.alpha_sort[1]).to eq fries 
+                expect(sides.items.alpha_sort[2]).to eq pickles
+                expect(sides.items.alpha_sort.last).to eq vegan_poutine                 
+            end
+        end
     end
 end
