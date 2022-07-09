@@ -260,4 +260,54 @@ RSpec.describe 'the parents index page', type: :feature do
         expect(page).to have_field("labor_intensity")
         expect(page).to have_button("Update Menu Section")
     end
+
+    # User Story 22, Parent Delete From Parent Index Page 
+    # As a visitor
+    # When I visit the parent index page
+    # Next to every parent, I see a link to delete that parent
+    # When I click the link
+    # I am returned to the Parent Index Page where I no longer see that parent
+    it 'has a link to delete each Section' do 
+        Item.destroy_all
+        Section.destroy_all 
+
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections"
+        # save_and_open_page
+        # binding.pry 
+
+        within('#section-0c') do 
+            expect(page).to have_button("Delete Sides")
+        end
+
+        within('#section-1c') do 
+            expect(page).to have_button("Delete Vegan Phillys")
+        end
+
+        within('#section-2c') do 
+            expect(page).to have_button("Delete Phillys")
+        end
+    end
+
+    it 'deletes a Section with a button and returns to Section Index where the Section is not shown' do 
+        Item.destroy_all
+        Section.destroy_all 
+
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections"
+        click_button "Delete Sides"
+        # save_and_open_page
+        # binding.pry 
+
+        expect(current_path).to eq "/sections"
+        expect(page).to_not have_content(sides.name)
+        expect(page).to have_content(vegan_phillys.name)
+        expect(page).to have_content(phillys.name)
+    end
 end
