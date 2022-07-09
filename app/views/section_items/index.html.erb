@@ -9,4 +9,4 @@
     <p>Price: <%= number_to_currency(item.price) %></p>
 <% end %>
 
-<%= link_to "Add New Menu Item to #{@section.name} Section", "/sections/@section.id/items/new" %>
+<%= link_to "Add New Menu Item to #{@section.name} Section", "/sections/#{@section.id}/items/new" %>

@@ -149,5 +149,8 @@ RSpec.describe 'Section Items index' do
         # save_and_open_page
         
         expect(page).to have_link("Add New Menu Item to Sides Section")
+
+        click_link("Add New Menu Item to #{sides.name} Section")
+        expect(current_path).to eq "/sections/#{sides.id}/items/new"
     end
 end
