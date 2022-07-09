@@ -2,6 +2,7 @@ class SectionItemsController < ApplicationController
     def index 
         @section = Section.find(params[:section_id])
         @items = @section.items 
+        binding.pry 
     end
 
     def new 
@@ -16,6 +17,6 @@ class SectionItemsController < ApplicationController
 
 private 
     def section_items_params
-        params.permit(:name, :need_restock, :price, :section_id)
+        params.permit(:name, :need_restock, :price, :section_id, :sort)
     end
 end

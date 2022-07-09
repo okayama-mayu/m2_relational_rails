@@ -120,11 +120,11 @@ RSpec.describe 'the parents index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/sections"
@@ -221,5 +221,43 @@ RSpec.describe 'the parents index page', type: :feature do
         expect(page).to have_field("vegan_options")
         expect(page).to have_field("labor_intensity")
         expect(page).to have_button("Submit")
+    end
+
+    # User Story 17, Parent Update From Parent Index Page 
+    # As a visitor
+    # When I visit the parent index page
+    # Next to every parent, I see a link to edit that parent's info
+    # When I click the link
+    # I should be taken to that parents edit page where I can update its information just like in User Story 4
+    it 'has a link next to every Section to edit the Section info' do 
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        visit "/sections"
+        # save_and_open_page
+
+        within('#section-0c') do 
+            expect(page).to have_button("Edit #{sides.name}")
+        end
+
+        within('#section-1c') do 
+            expect(page).to have_button("Edit #{vegan_phillys.name}")
+        end
+
+        within('#section-2c') do 
+            expect(page).to have_button("Edit #{phillys.name}")
+        end
+
+        click_button "Edit #{sides.name}"
+        # save_and_open_page
+
+        expect(current_path).to eq("/sections/#{sides.id}/edit")
+        expect(page).to have_content("Edit Menu Section")
+        expect(page).to have_field("Menu Section Name")
+        expect(page).to have_field("vegan_options")
+        expect(page).to have_field("labor_intensity")
+        expect(page).to have_button("Update Menu Section")
     end
 end
