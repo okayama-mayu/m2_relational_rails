@@ -10,5 +10,7 @@
     <p>Price: <%= number_to_currency(item.price) %></p>
     <div id="section-<%= index %>">
         <%= button_to "Edit #{item.name}", "/items/#{item.id}/edit", method: :get %>
+        <br>
+        <%= button_to "Delete #{item.name}", "/items/#{item.id}", method: :delete %>
     </div>
 <% end %>
