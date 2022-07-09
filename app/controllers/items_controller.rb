@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
     def index 
-        @items = Item.all 
+        @items = Item.all.needs_restock_only
     end
 
     def show
