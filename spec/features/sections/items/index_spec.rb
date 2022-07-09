@@ -15,7 +15,7 @@ RSpec.describe 'Section Items index' do
         veganphil = vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
         vegchicken = vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
 
-        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
 
         visit "/sections/#{vegan_phillys.id}/items"
         # save_and_open_page
@@ -183,18 +183,19 @@ RSpec.describe 'Section Items index' do
 
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
 
-        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         vegan_poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
-        fries = sides.items.create!(name: 'Fries', need_restock: false, price: 4)
-        cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+        fries = sides.items.create!(name: 'Fries', need_restock: true, price: 4)
+        cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: true, price: 7)
 
         visit "/sections/#{sides.id}/items"
-        save_and_open_page
+        # save_and_open_page
         # visit "/sections/#{sides.id}/items?sort=active"
-        click_button "Sort Items in Alphabetical Order"
+        click_link "Sort Items in Alphabetical Order"
         # save_and_open_page
 
         expect(current_path).to eq "/sections/#{sides.id}/items"
+        # expect(page).to have_current_path
 
         within('#item-0') do 
             expect(page).to have_content(cheese_fries.name)

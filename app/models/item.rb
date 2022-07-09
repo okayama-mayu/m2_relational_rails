@@ -8,4 +8,8 @@ class Item < ApplicationRecord
     def self.needs_restock_only
         Item.where("need_restock = true")
     end
+
+    def self.alpha_sort
+        Item.order(:name)
+    end
 end

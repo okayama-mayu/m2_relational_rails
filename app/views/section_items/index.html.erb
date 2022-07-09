@@ -14,4 +14,4 @@
 
 <%= link_to "Add New Menu Item to #{@section.name} Section", "/sections/#{@section.id}/items/new" %><br><br>
 
-<%= button_to "Sort Items in Alphabetical Order", "/sections/#{@section.id}/items?sort=active" %>
+<%= link_to "Sort Items in Alphabetical Order", "/sections/#{@section.id}/items?sort=active", method: :get %>
