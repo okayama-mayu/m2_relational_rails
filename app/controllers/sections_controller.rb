@@ -27,6 +27,7 @@ class SectionsController < ApplicationController
         redirect_to "/sections/#{params[:section_id]}"
     end
 
+private 
     def section_params
         params.permit(:name, :vegan_options, :labor_intensity)
     end
