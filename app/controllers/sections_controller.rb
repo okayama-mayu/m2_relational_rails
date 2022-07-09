@@ -13,11 +13,21 @@ class SectionsController < ApplicationController
     end
 
     def create
-        @section = Section.create(artist_params)
+        @section = Section.create(section_params)
         redirect_to "/sections"
     end
 
-    def artist_params
+    def edit
+        @section = Section.find(params[:id])
+    end
+
+    def update 
+        section = Section.find(params[:section_id])
+        section.update(section_params)
+        redirect_to "/sections/#{params[:section_id]}"
+    end
+
+    def section_params
         params.permit(:name, :vegan_options, :labor_intensity)
     end
 end

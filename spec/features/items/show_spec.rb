@@ -110,7 +110,7 @@ RSpec.describe 'the item show page', type: :feature do
 
         visit "/items/#{item3.id}"
         click_link "See All Menu Sections"
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq('/sections')
         expect(page).to have_content(phillys.name)

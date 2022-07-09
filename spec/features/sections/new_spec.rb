@@ -53,7 +53,7 @@ RSpec.describe 'the New Sections page', type: :feature do
         fill_in :labor_intensity, with: "1"
 
         click_button("Submit")
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path). to eq("/sections")
         expect(page).to have_content("Merch")

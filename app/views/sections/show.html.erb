@@ -6,5 +6,10 @@
 <p><b> Vegan Options Available? </b><%= @section.vegan_options %></p>
 <p><b> Labor Intensity Required: </b><%= @section.labor_intensity %></p>
 <p><b> Items in Section: </b><%= @count %></p>
-<a href="/sections/<%= @section.id %>/items">See All Items in this Menu Section</a>
+
+<a href="/sections/<%= @section.id %>/items">See All Items in this Menu Section</a> <br><br>
+
+<%= link_to "Update This Menu Section", "/sections/#{@section.id}/edit"%>
+
+
 

@@ -1,0 +1,14 @@
+<h1>Edit Menu Section</h1>
+
+<%= form_with url: "/sections/#{@section.id}", method: :patch, local: true do |form| %> 
+    <%= form.label :name, "Menu Section Name:" %>
+    <%= form.text_field :name, value: @section.name %><br><br>
+
+    <%= form.check_box :vegan_options, checked: @section.vegan_options %>
+    <%= form.label :vegan_options, "Has vegan options (check if yes)" %><br><br>
+
+    <%= form.label :labor_intensity, "Level of labor intensity required on a 1 to 5 scale:" %>
+    <%= form.number_field :labor_intensity, in: 1..5, step:1, value: @section.labor_intensity %><br><br>
+
+    <%= form.submit "Update Menu Section" %>
+<% end %>
