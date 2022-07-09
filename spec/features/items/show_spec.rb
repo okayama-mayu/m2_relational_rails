@@ -144,4 +144,39 @@ RSpec.describe 'the item show page', type: :feature do
         expect(current_path).to eq "/items/#{item.id}/edit" 
     end
 
+    # User Story 20, Child Delete 
+    # As a visitor
+    # When I visit a child show page
+    # Then I see a link to delete the child "Delete Child"
+    # When I click the link
+    # Then a 'DELETE' request is sent to '/child_table_name/:id',
+    # the child is deleted,
+    # and I am redirected to the child index page where I no longer see this child
+    it 'has a link to delete the Item' do 
+        Item.destroy_all
+        Section.destroy_all
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        item = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+
+        visit "/items/#{item.id}"
+        # save_and_open_page
+
+        expect(page).to have_button("Delete Item")
+    end
+
+    it 'has a link to delete the Item that if clicked on, will redirect to the item index page where the Item is no longer visible' do 
+        Item.destroy_all
+        Section.destroy_all
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        item = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        item2 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        visit "/items/#{item.id}"
+        click_button "Delete Item" 
+        save_and_open_page
+
+        expect(current_path).to eq "/items" 
+        expect(page).to_not have_content(item.name)
+        expect(page).to have_content(item2.name)
+    end
 end
