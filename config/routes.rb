@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get '/items/:id', to: 'items#show' 
   get '/sections/:section_id/items', to: 'section_items#index' 
   post '/sections', to: 'sections#create'
+  patch '/sections/:section_id', to: 'sections#update'
 end

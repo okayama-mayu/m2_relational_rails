@@ -23,7 +23,7 @@ RSpec.describe 'the Section Edit page', type: :feature do
 
         visit "/sections/#{sides.id}"
         click_link("Update This Menu Section")
-        save_and_open_page
+        # save_and_open_page
         
         expect(current_path).to eq("/sections/#{sides.id}/edit")
         expect(page).to have_content("Edit Menu Section")
@@ -31,5 +31,28 @@ RSpec.describe 'the Section Edit page', type: :feature do
         expect(page).to have_field("vegan_options")
         expect(page).to have_field("labor_intensity")
         expect(page).to have_button("Update Menu Section")
+    end
+
+    it 'can edit the Section' do 
+        Item.destroy_all
+        Section.destroy_all
+        sides = Section.create!(name: 'Sidds', vegan_options: false, labor_intensity: 5)
+
+        visit "/sections/#{sides.id}" 
+        expect(page).to have_content('Sidds')
+
+        click_link("Update This Menu Section")
+
+        fill_in "Menu Section Name:", with: 'Sides'
+        page.check(:vegan_options)
+        fill_in :labor_intensity, with: "3"
+
+        click_button("Update Menu Section")
+        # save_and_open_page
+
+        expect(current_path).to eq("/sections/#{sides.id}")
+        expect(page).to have_content("Sides")
+        expect(page).to have_content("true")
+        expect(page).to have_content("3")
     end
 end
