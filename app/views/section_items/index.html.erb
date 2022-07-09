@@ -8,6 +8,7 @@
     <h4><%= item.name %></h4>
     <p>Restock Needed: <%= item.need_restock %></p>
     <p>Price: <%= number_to_currency(item.price) %></p>
+    <%= button_to "Edit #{item.name}", "/items/#{item.id}/edit", method: :get %> <br>
     </div>
 <% end %>
 

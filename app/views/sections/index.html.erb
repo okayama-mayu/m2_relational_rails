@@ -5,10 +5,15 @@
 <h1> Menu Sections </h1>
 <% @sections.each_with_index do |section, index| %>
     <div id="section-<%= index %>">
-    <p><b><%= section.name %></b><span id="section-<%= index %>b">  Created at: <%= section.created_at %></span>
-    <span id="section-<%= index %>c"><%= button_to "Edit #{section.name}", "/sections/#{section.id}/edit", method: :get %>
-    </span>
+        <p>
+        <b><%= section.name %></b>
+        <span id="section-<%= index %>b">  Created at: <%= section.created_at %></span> 
+        <span id="section-<%= index %>c"><%= button_to "Edit #{section.name}", "/sections/#{section.id}/edit", method: :get %></span>
+        </p>
     </div>
+    <br>
 <% end %>
+
+<br>
 
 <%= link_to "Create New Menu Section", "/sections/new"%>

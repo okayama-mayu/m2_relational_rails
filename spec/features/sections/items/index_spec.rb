@@ -177,7 +177,7 @@ RSpec.describe 'Section Items index' do
         expect(page).to have_button("Sort Items in Alphabetical Order")
     end
 
-    it 'has a link that takes me to the Menu Section Items Index page' do 
+    xit 'has a link that takes me to the Menu Section Items Index page' do 
         Item.destroy_all
         Section.destroy_all
 
@@ -210,5 +210,56 @@ RSpec.describe 'Section Items index' do
         within('#item-3') do 
             expect(page).to have_content(vegan_poutine.name)
         end
+    end
+
+    # User Story 18, Child Update From Childs Index Page 
+    # As a visitor
+    # When I visit the `child_table_name` index page or a parent `child_table_name` index page
+    # Next to every child, I see a link to edit that child's info
+    # When I click the link
+    # I should be taken to that `child_table_name` edit page where I can update its information just like in User Story 11
+    it 'has a link next to every Item to edit the Item info' do 
+        Item.destroy_all
+        Section.destroy_all
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        vegan1 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan2 = vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan3 = vegan_phillys.items.create!(name: 'Vegan Seitan Philly', need_restock: true, price: 12)
+
+        visit "/sections/#{vegan_phillys.id}/items" 
+        # save_and_open_page
+
+        within('#item-0') do 
+            expect(page).to have_button("Edit #{vegan1.name}")
+        end
+
+        within('#item-1') do 
+            expect(page).to have_button("Edit #{vegan2.name}")
+        end
+
+        within('#item-2') do 
+            expect(page).to have_button("Edit #{vegan3.name}")
+        end
+    end
+
+    it 'has a link that takes you to the Item Edit page' do 
+        Item.destroy_all
+        Section.destroy_all
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        vegan1 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan2 = vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan3 = vegan_phillys.items.create!(name: 'Vegan Seitan Philly', need_restock: true, price: 12)
+
+        visit "/sections/#{vegan_phillys.id}/items"
+        click_button "Edit #{vegan1.name}"
+        save_and_open_page
+
+        expect(page).to have_content("Edit Menu Item")
+        expect(page).to have_content("Menu Item Name:")
+        expect(page).to have_content("Does the menu item or its ingredients need to be restocked? Check if yes.")
+        expect(page).to have_content("Menu Item Price: $")
+        expect(page).to have_button("Update Item")
     end
 end
