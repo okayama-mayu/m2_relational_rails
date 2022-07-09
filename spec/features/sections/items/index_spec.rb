@@ -177,7 +177,7 @@ RSpec.describe 'Section Items index' do
         expect(page).to have_button("Sort Items in Alphabetical Order")
     end
 
-    xit 'has a link that takes me to the Menu Section Items Index page' do 
+    it 'has a link that takes me to the Menu Section Items Index page' do 
         Item.destroy_all
         Section.destroy_all
 
@@ -189,9 +189,10 @@ RSpec.describe 'Section Items index' do
         cheese_fries = sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
 
         visit "/sections/#{sides.id}/items"
+        save_and_open_page
         # visit "/sections/#{sides.id}/items?sort=active"
         click_button "Sort Items in Alphabetical Order"
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq "/sections/#{sides.id}/items"
 
