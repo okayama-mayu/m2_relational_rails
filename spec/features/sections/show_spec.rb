@@ -230,7 +230,7 @@ RSpec.describe 'the section show page', type: :feature do
 
         visit "/sections/#{vegan_phillys.id}"
         click_button "Delete This Menu Section"
-        save_and_open_page
+        # save_and_open_page
 
         expect(current_path).to eq('/sections')
         expect(page).to_not have_content(vegan_phillys.name)

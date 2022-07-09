@@ -1,8 +1,12 @@
 class SectionItemsController < ApplicationController 
     def index 
         @section = Section.find(params[:section_id])
+        # binding.pry 
         if params[:sort] == "active" 
             @items = @section.items.alpha_sort 
+            # binding.pry 
+        elsif params[:minimum] != nil 
+            @items = @section.items.min_filter(params[:minimum])
         else 
             @items = @section.items 
         end
@@ -20,6 +24,6 @@ class SectionItemsController < ApplicationController
 
 private 
     def section_items_params
-        params.permit(:name, :need_restock, :price, :section_id, :sort)
+        params.permit(:name, :need_restock, :price, :section_id)
     end
 end

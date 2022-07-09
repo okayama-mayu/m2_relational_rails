@@ -160,7 +160,7 @@ RSpec.describe 'Section Items index' do
     # Then I see a link to sort children in alphabetical order
     # When I click on the link
     # I'm taken back to the Parent's children Index Page where I see all of the parent's children in alphabetical order
-    it 'has a link to sort Items in alphabetical order' do 
+    it 'has a button to sort Items in alphabetical order' do 
         Item.destroy_all
         Section.destroy_all
 
@@ -174,13 +174,12 @@ RSpec.describe 'Section Items index' do
         visit "/sections/#{sides.id}/items"
         # save_and_open_page
 
-        expect(page).to have_button("Sort Items in Alphabetical Order")
+        expect(page).to have_link("Sort Items in Alphabetical Order")
     end
 
-    it 'has a link that takes me to the Menu Section Items Index page' do 
+    it 'has a link that takes me to the Menu Section Items Index page with the sorted Items' do 
         Item.destroy_all
         Section.destroy_all
-
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
 
         pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
@@ -256,12 +255,58 @@ RSpec.describe 'Section Items index' do
 
         visit "/sections/#{vegan_phillys.id}/items"
         click_button "Edit #{vegan1.name}"
-        save_and_open_page
+        # save_and_open_page
 
         expect(page).to have_content("Edit Menu Item")
         expect(page).to have_content("Menu Item Name:")
         expect(page).to have_content("Does the menu item or its ingredients need to be restocked? Check if yes.")
         expect(page).to have_content("Menu Item Price: $")
         expect(page).to have_button("Update Item")
+    end
+
+    # User Story 21, Display Records Over a Given Threshold 
+    # As a visitor
+    # When I visit the Parent's children Index Page
+    # I see a form that allows me to input a number value
+    # When I input a number value and click the submit button that reads 'Only return records with more than `number` of `column_name`'
+    # Then I am brought back to the current index page with only the records that meet that threshold shown.
+    it 'has a form to input price filter' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item2 = phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+        item3 = phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        item4 = phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        item5 = phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+        visit "/sections/#{phillys.id}/items"
+        # save_and_open_page
+
+        expect(page).to have_field("Only show items with minimum price of: $")
+        expect(page).to have_button("Submit")
+    end
+
+    it 'has a form that filters the Items by price threshold' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item2 = phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+        item3 = phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        item4 = phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        item5 = phillys.items.create!(name: 'Seitan Philly', need_restock: true, price: 12)
+
+        visit "/sections/#{phillys.id}/items"
+        fill_in "Only show items with minimum price of: $", with: '12'
+        click_button "Submit" 
+        # save_and_open_page
+
+        expect(current_path).to eq("/sections/#{phillys.id}/items/minimum")
+        expect(page).to have_content(item3.name)
+        expect(page).to have_content(item4.name)
+        expect(page).to have_content(item5.name)
+        expect(page).to_not have_content(item1.name)
+        expect(page).to_not have_content(item2.name)
     end
 end

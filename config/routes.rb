@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   patch '/items/:item_id', to: 'items#update'
   delete '/sections/:section_id', to: 'sections#destroy' 
   delete '/items/:item_id', to: 'items#destroy' 
+  post '/sections/:section_id/items/minimum', to: 'section_items#index'
 end
