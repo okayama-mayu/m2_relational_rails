@@ -13,11 +13,11 @@ RSpec.describe 'the child index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit '/items'
@@ -45,11 +45,11 @@ RSpec.describe 'the child index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/items"
@@ -68,11 +68,11 @@ RSpec.describe 'the child index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/items"
@@ -102,11 +102,11 @@ RSpec.describe 'the child index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit '/items'
@@ -126,11 +126,11 @@ RSpec.describe 'the child index page', type: :feature do
         drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
         kids = Section.create!(name: 'Kids', vegan_options: true, labor_intensity: 2)
 
-        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        item1 = phillys.items.create!(name: 'Steak Philly', need_restock: true, price: 10)
 
         item2 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
 
-        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        item3 = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
         item4 = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 
         visit "/items"
@@ -143,5 +143,32 @@ RSpec.describe 'the child index page', type: :feature do
         expect(page).to have_content(sides.name)
         expect(page).to have_content(drinks.name)
         expect(page).to have_content(kids.name)
+    end
+
+    # User Story 15, Child Index only shows `true` Records 
+    # As a visitor
+    # When I visit the child index
+    # Then I only see records where the boolean column is `true`
+    it 'only shows Items that need to be restocked' do 
+        Item.destroy_all
+        Section.destroy_all
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        philly1 = phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        philly2 = phillys.items.create!(name: 'Chicken Philly', need_restock: false, price: 10)
+
+        vegan1 = vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan2 = vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan3 = vegan_phillys.items.create!(name: 'Vegan Seitan Philly', need_restock: true, price: 12)
+
+        visit '/items'
+        # save_and_open_page 
+
+        expect(page).to_not have_content(philly1.name)
+        expect(page).to_not have_content(philly2.name)
+        expect(page).to have_content(vegan1.name)
+        expect(page).to have_content(vegan2.name)
+        expect(page).to have_content(vegan3.name)       
     end
 end

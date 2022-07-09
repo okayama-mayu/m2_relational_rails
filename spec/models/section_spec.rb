@@ -10,7 +10,7 @@ RSpec.describe Section, type: :model do
 
     it { should have_many :items }    
 
-    describe 'instance methods' do 
+    describe 'model methods' do 
         describe '#order_by_time_created' do     
             it 'returns @sections with the newest section first and the oldest section last' do 
                 phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
