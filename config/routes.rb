@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get '/sections/:section_id/items', to: 'section_items#index' 
   post '/sections', to: 'sections#create'
   patch '/sections/:section_id', to: 'sections#update'
+  get '/sections/:section_id/items/new', to: 'section_items#new'
+  post '/sections/:section_id/items', to: 'section_items#create'
 end
