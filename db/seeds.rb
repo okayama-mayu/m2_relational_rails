@@ -27,11 +27,11 @@ sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
 sides.items.create!(name: 'Fries', need_restock: false, price: 4)
 sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
 
-drinks.items.create!(name: 'soda', need_restock: false, price: 3)
-drinks.items.create!(name: 'beer', need_restock: false, price: 5)
+drinks.items.create!(name: 'Soda', need_restock: false, price: 3)
+drinks.items.create!(name: 'Beer', need_restock: false, price: 5)
 
-kids.items.create!(name: 'grilled cheese', need_restock: false, price: 6)
-kids.items.create!(name: 'vegan grilled cheese', need_restock: false, price: 8)
+kids.items.create!(name: 'Grilled Cheese', need_restock: false, price: 6)
+kids.items.create!(name: 'Vegan Grilled Cheese', need_restock: false, price: 8)
 
 
 

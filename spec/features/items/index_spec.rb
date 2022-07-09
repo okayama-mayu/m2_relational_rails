@@ -231,4 +231,67 @@ RSpec.describe 'the child index page', type: :feature do
         expect(page).to have_content("Menu Item Price: $")
         expect(page).to have_button("Update Item")
     end
+
+    # User Story 23, Child Delete From Childs Index Page 
+    # As a visitor
+    # When I visit the `child_table_name` index page or a parent `child_table_name` index page
+    # Next to every child, I see a link to delete that child
+    # When I click the link
+    # I should be taken to the `child_table_name` index page where I no longer see that child
+    it 'has buttons to delete each Item' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+        visit '/items' 
+        # save_and_open_page
+
+        within('#section-0') do
+            expect(page).to have_button("Delete Pickle Fries")
+        end
+
+        within('#section-1') do
+            expect(page).to have_button("Delete Vegan Poutine")
+        end
+
+        within('#section-2') do
+            expect(page).to have_button("Delete Soda")
+        end
+
+        within('#section-3') do
+            expect(page).to have_button("Delete Beer")
+        end
+    end
+
+    it 'has delete buttons that if clicked will redirect to the Items index where the Item is no longer shown' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+        visit '/items' 
+        click_button "Delete Soda" 
+        # save_and_open_page
+
+        expect(current_path).to eq '/items'
+        expect(page).to_not have_content("Soda")
+        expect(page).to have_content(pickles.name)
+        expect(page).to have_content(poutine.name)
+        expect(page).to have_content(beer.name)
+    end
 end
