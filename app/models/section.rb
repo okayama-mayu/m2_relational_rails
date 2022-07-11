@@ -31,4 +31,8 @@ class Section < ApplicationRecord
         .group('sections.id') 
         .order(Arel.sql('count(sections.id) DESC'))
     end
+
+    def self.search(key_word)
+            section = Section.where("LOWER(name) = ?", key_word.downcase) 
+    end
 end

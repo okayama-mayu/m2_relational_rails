@@ -395,9 +395,9 @@ RSpec.describe 'the parents index page', type: :feature do
         sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
 
         visit '/sections' 
-        save_and_open_page
+        # save_and_open_page
         click_on "Sort Menu Sections by Number of Items"
-        save_and_open_page
+        # save_and_open_page
 
         within "#section-0" do 
             expect(page).to have_content(sides.items.count)
@@ -410,5 +410,41 @@ RSpec.describe 'the parents index page', type: :feature do
         within "#section-2" do 
             expect(page).to have_content(phillys.items.count)
         end
+    end
+
+    # Search by name (exact match)
+    # As a visitor
+    # When I visit an index page ('/parents') or ('/child_table_name')
+    # Then I see a text box to filter results by keyword
+    # When I type in a keyword that is an exact match of one or more of my records and press the Search button
+    # Then I only see records that are an exact match returned on the page
+    it 'has a text box to filter results by keyworkd' do 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        visit '/sections' 
+        # save_and_open_page
+
+        expect(page).to have_content("Search using key word (exact match):")
+    end
+
+    it 'can search for Sections using key words' do 
+        Item.destroy_all
+        Section.destroy_all 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        visit '/sections' 
+        # save_and_open_page
+
+        fill_in :search, with: "Sides"
+        click_button "Search" 
+        save_and_open_page
+
+        expect(page).to have_content("Sides")
+        expect(page).to_not have_content("Phillys")
+        expect(page).to_not have_content("Vegan Phillys")
     end
 end

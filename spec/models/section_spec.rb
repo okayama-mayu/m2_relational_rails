@@ -61,5 +61,21 @@ RSpec.describe Section, type: :model do
                 expect(sections.sort_by_item_count.last).to eq phillys
             end
         end
+
+        describe '#search' do
+            it 'can return a Section based on a search' do
+                Item.destroy_all
+                Section.destroy_all 
+                phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+                sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+                vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+                sections = Section.all 
+
+                expect(sections.search("phillys")).to eq [phillys]
+                expect(sections.search("Sides")).to eq [sides] 
+                expect(sections.search("Vegan phillys")).to eq [vegan_phillys] 
+            end
+        end
     end
 end

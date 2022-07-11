@@ -1,6 +1,9 @@
 class SectionsController < ApplicationController
     def index 
-        if params[:num_sort] == "active"
+        if params[:search] != nil 
+            # @sections = []
+            @sections = Section.search(params[:search])
+        elsif params[:num_sort] == "active"
             @sections = Section.all.sort_by_item_count
             @num_sort = "active"
         else 
@@ -40,6 +43,6 @@ class SectionsController < ApplicationController
 
 private 
     def section_params
-        params.permit(:name, :vegan_options, :labor_intensity)
+        params.permit(:name, :vegan_options, :labor_intensity, :search)
     end
 end

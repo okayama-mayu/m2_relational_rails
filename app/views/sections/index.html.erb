@@ -4,6 +4,14 @@
 
 <h1> Menu Sections </h1>
 
+<b>Search using key word (exact match):</b> 
+    <span><%= form_tag("/sections", method: :get) do %>
+        <%= text_field_tag(:search, params[:search]) %>
+        <%= submit_tag ("Search") %>
+    <% end %>
+
+<br>
+
 <%= link_to "Sort Menu Sections by Number of Items", "/sections?num_sort=active", method: :get %>
 
 <% @sections.each_with_index do |section, index| %>
