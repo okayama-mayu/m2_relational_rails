@@ -1,6 +1,11 @@
 class SectionsController < ApplicationController
     def index 
-        @sections = Section.all.order_by_time_created
+        if params[:num_sort] == "active"
+            @sections = Section.all.sort_by_item_count
+            @num_sort = "active"
+        else 
+            @sections = Section.all.order_by_time_created
+        end
     end
 
     def show
