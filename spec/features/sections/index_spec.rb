@@ -29,7 +29,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # I see that records are ordered by most recently created first
     # And next to each of the records I see when it was created
     it 'orders the Sections by most recently created first' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -61,7 +61,7 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'shows when the Section was created next to each Section' do
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -97,7 +97,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I visit any page on the site
     # Then I see a link at the top of the page that takes me to the Child Index
     it 'shows a link to the Item Index at the top of the page' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -113,7 +113,7 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'allows you to navigate to the Item Index if link is clicked' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -147,7 +147,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I visit any page on the site
     # Then I see a link at the top of the page that takes me to the Parent Index
     it 'shows a link to the Section Index at the top of the page' do
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -163,7 +163,7 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'allows you to navigate to the Section Index if link is clicked' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -194,7 +194,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # a new parent record is created,
     # and I am redirected to the Parent Index page where I see the new Parent displayed.
     it 'has a link to create a new Section' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -206,7 +206,7 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'has a link that takes you to a form for a new Section record' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -230,7 +230,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I click the link
     # I should be taken to that parents edit page where I can update its information just like in User Story 4
     it 'has a link next to every Section to edit the Section info' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -268,8 +268,8 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I click the link
     # I am returned to the Parent Index Page where I no longer see that parent
     it 'has a link to delete each Section' do 
-        Item.destroy_all
-        Section.destroy_all 
+        # Item.destroy_all
+        # Section.destroy_all 
 
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
@@ -293,8 +293,8 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'deletes a Section with a button and returns to Section Index where the Section is not shown' do 
-        Item.destroy_all
-        Section.destroy_all 
+        # Item.destroy_all
+        # Section.destroy_all 
 
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
@@ -309,5 +309,106 @@ RSpec.describe 'the parents index page', type: :feature do
         expect(page).to_not have_content(sides.name)
         expect(page).to have_content(vegan_phillys.name)
         expect(page).to have_content(phillys.name)
+    end
+
+    # EXT1: Sort Parents by Number of Children 
+    # As a visitor
+    # When I visit the Parents Index Page
+    # Then I see a link to sort parents by the number of `child_table_name` they have
+    # When I click on the link
+    # I'm taken back to the Parent Index Page where I see all of the parents in order of their count of `child_table_name` (highest to lowest) And, I see the number of children next to each parent name
+    it 'has a link to sort parents by number of Items they have' do 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+
+        phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+        vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+        sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+        sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+        visit '/sections' 
+
+        expect(page).to have_link("Sort Menu Sections by Number of Items")
+    end
+
+    it 'has a link that if clicked goes to the Section index page with the Sections sorted by number of Items' do 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        
+
+        phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+        vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+        sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+        sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+        visit '/sections' 
+        click_on "Sort Menu Sections by Number of Items"
+        # save_and_open_page
+
+        expect(current_path).to eq "/sections"
+
+        within "#section-0" do 
+            expect(page).to have_content(sides.name)
+        end
+
+        within "#section-1" do 
+            expect(page).to have_content(vegan_phillys.name)
+        end
+
+        within "#section-2" do 
+            expect(page).to have_content(phillys.name)
+        end
+    end
+
+    it 'has the number of children next to each parent name' do 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+        
+
+        phillys.items.create!(name: 'Steak Philly', need_restock: false, price: 10)
+        phillys.items.create!(name: 'Chicken Philly', need_restock: true, price: 10)
+
+        vegan_phillys.items.create!(name: 'Vegan Far East', need_restock: true, price: 15)
+        vegan_phillys.items.create!(name: 'Vegan Philly', need_restock: true, price: 12)
+        vegan_phillys.items.create!(name: 'Vegan Chicken Philly', need_restock: true, price: 12)
+
+        sides.items.create!(name: 'Pickle Fries', need_restock: false, price: 6)
+        sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        sides.items.create!(name: 'Fries', need_restock: false, price: 4)
+        sides.items.create!(name: 'Cheese Fries', need_restock: false, price: 7)
+
+        visit '/sections' 
+        save_and_open_page
+        click_on "Sort Menu Sections by Number of Items"
+        save_and_open_page
+
+        within "#section-0" do 
+            expect(page).to have_content(sides.items.count)
+        end
+
+        within "#section-1" do 
+            expect(page).to have_content(vegan_phillys.items.count)
+        end
+
+        within "#section-2" do 
+            expect(page).to have_content(phillys.items.count)
+        end
     end
 end

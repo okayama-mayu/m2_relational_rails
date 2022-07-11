@@ -4,7 +4,7 @@ class SectionItemsController < ApplicationController
         # binding.pry 
         if params[:sort] == "active" 
             @items = @section.items.alpha_sort 
-            # binding.pry 
+            # binding.pry
         elsif params[:minimum] != nil 
             @items = @section.items.min_filter(params[:minimum])
         else 

@@ -13,7 +13,7 @@ RSpec.describe 'the New Sections page', type: :feature do
     # a new parent record is created,
     # and I am redirected to the Parent Index page where I see the new Parent displayed.
     it 'has a form for a new Section record' do 
-        Section.destroy_all
+        # Section.destroy_all
         
         visit "/sections/new"
         # save_and_open_page
@@ -27,7 +27,7 @@ RSpec.describe 'the New Sections page', type: :feature do
     end
 
     it 'has a fillable form' do 
-        Section.destroy_all
+        # Section.destroy_all
 
         visit "/sections/new"
         fill_in :name, with: "Merch"
@@ -42,7 +42,7 @@ RSpec.describe 'the New Sections page', type: :feature do
     end
 
     it 'can create a new Section and redirect to Section Index with the new Section shown on page' do 
-        Section.destroy_all
+        # Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)

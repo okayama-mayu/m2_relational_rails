@@ -3,12 +3,19 @@
 </div>
 
 <h1> Menu Sections </h1>
+
+<%= link_to "Sort Menu Sections by Number of Items", "/sections?num_sort=active", method: :get %>
+
 <% @sections.each_with_index do |section, index| %>
     <div id="section-<%= index %>">
         <p>
         <b><%= section.name %></b>
 
         <span id="section-<%= index %>b">  Created at: <%= section.created_at %></span> 
+
+        <% if @num_sort == "active" %>
+            <p>Number of Items in Section: <%= section.items.count %></p>
+        <% end %>
 
         <span id="section-<%= index %>c">
         <%= button_to "Edit #{section.name}", "/sections/#{section.id}/edit", method: :get %> 
