@@ -294,4 +294,55 @@ RSpec.describe 'the child index page', type: :feature do
         expect(page).to have_content(poutine.name)
         expect(page).to have_content(beer.name)
     end
+
+    # Search by name (exact match)
+    # As a visitor
+    # When I visit an index page ('/parents') or ('/child_table_name')
+    # Then I see a text box to filter results by keyword
+    # When I type in a keyword that is an exact match of one or more of my records and press the Search button
+    # Then I only see records that are an exact match returned on the page
+    it 'has a text box to filter results by keywords' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+        visit '/items' 
+        # save_and_open_page
+
+        expect(page).to have_content("Search using key word (exact match):")
+    end
+
+    it 'can search for Items using key words' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+
+        visit '/items' 
+
+        fill_in :search, with: "pickle fries"
+        click_button "Search" 
+        # save_and_open_page
+
+        expect(page).to have_content("Pickle Fries")
+        expect(page).to_not have_content("Vegan Poutine")
+        expect(page).to_not have_content("Soda")
+        expect(page).to_not have_content("Beer")
+    end
 end

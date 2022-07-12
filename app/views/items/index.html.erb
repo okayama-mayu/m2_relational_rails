@@ -3,6 +3,14 @@
 </div>
 
 <h1>Menu Items</h1>
+
+<b>Search using key word (exact match):</b> 
+    <span><%= form_tag("/items", method: :get) do %>
+        <%= text_field_tag(:search, params[:search]) %>
+        <%= submit_tag ("Search") %>
+    <% end %>
+<br>
+
 <% @items.each_with_index do |item, index| %>
     <h3><%= item.name %></h3>
     <p>Menu Section: <%= item.section.name %></p>

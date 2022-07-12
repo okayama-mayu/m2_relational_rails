@@ -1,6 +1,11 @@
 class ItemsController < ApplicationController
     def index 
-        @items = Item.all.needs_restock_only
+        if params[:search] != nil 
+            binding.pry 
+            @items = Item.search(params[:search])
+        else 
+            @items = Item.needs_restock_only 
+        end
     end
 
     def show
