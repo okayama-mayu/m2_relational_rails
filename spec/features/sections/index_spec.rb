@@ -418,7 +418,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # Then I see a text box to filter results by keyword
     # When I type in a keyword that is an exact match of one or more of my records and press the Search button
     # Then I only see records that are an exact match returned on the page
-    it 'has a text box to filter results by keyworkd' do 
+    it 'has a text box to filter results by keywords' do 
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)

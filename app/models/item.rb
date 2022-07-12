@@ -16,4 +16,8 @@ class Item < ApplicationRecord
     def self.min_filter(min)
         Item.where("price >= #{min.to_i}")
     end
+
+    def self.search(key_word)
+        section = Item.where("LOWER(name) = ?", key_word.downcase)
+    end
 end
