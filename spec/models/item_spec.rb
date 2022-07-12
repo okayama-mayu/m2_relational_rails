@@ -75,5 +75,26 @@ RSpec.describe Item, type: :model do
                 expect(items.min_filter("12").last).to eq item5
             end
         end
+
+        describe '#search' do
+            it 'can return an Item based on a search' do
+                Item.destroy_all
+                Section.destroy_all 
+
+                sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+                drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+                pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+                poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+                soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+                beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+                expect(Item.search("Pickle Fries")).to eq [pickles]
+                expect(Item.search("vegan poutine")).to eq [poutine] 
+                expect(Item.search("soDa")).to eq [soda] 
+                expect(Item.search("BEER")).to eq [beer] 
+            end
+        end
     end
 end

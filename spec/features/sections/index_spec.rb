@@ -230,7 +230,7 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I click the link
     # I should be taken to that parents edit page where I can update its information just like in User Story 4
     it 'has a link next to every Section to edit the Section info' do 
-        # Section.destroy_all
+        Section.destroy_all
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
         sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
@@ -268,8 +268,8 @@ RSpec.describe 'the parents index page', type: :feature do
     # When I click the link
     # I am returned to the Parent Index Page where I no longer see that parent
     it 'has a link to delete each Section' do 
-        # Item.destroy_all
-        # Section.destroy_all 
+        Item.destroy_all
+        Section.destroy_all 
 
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
@@ -293,8 +293,8 @@ RSpec.describe 'the parents index page', type: :feature do
     end
 
     it 'deletes a Section with a button and returns to Section Index where the Section is not shown' do 
-        # Item.destroy_all
-        # Section.destroy_all 
+        Item.destroy_all
+        Section.destroy_all 
 
         phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
         vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
