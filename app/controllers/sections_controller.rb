@@ -1,10 +1,12 @@
 class SectionsController < ApplicationController
     def index 
-        if params[:search] != nil 
-            # @sections = []
-            @sections = Section.search(params[:search])
+        # binding.pry 
+        if params[:search_exact] != nil 
+            @sections = Section.search_exact(params[:search_exact])
+        elsif params[:search_partial] != nil 
+            @sections = Section.search_partial(params[:search_partial])
         elsif params[:num_sort] == "active"
-            @sections = Section.all.sort_by_item_count
+            @sections = Section.sort_by_item_count
             @num_sort = "active"
         else 
             @sections = Section.all.order_by_time_created

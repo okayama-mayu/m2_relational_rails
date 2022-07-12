@@ -439,12 +439,51 @@ RSpec.describe 'the parents index page', type: :feature do
         visit '/sections' 
         # save_and_open_page
 
-        fill_in :search, with: "Sides"
-        click_button "Search" 
-        save_and_open_page
+        fill_in :search_exact, with: "Sides"
+        click_button "Search for Exact Matches" 
+        # save_and_open_page
 
         expect(page).to have_content("Sides")
         expect(page).to_not have_content("Phillys")
         expect(page).to_not have_content("Vegan Phillys")
+    end
+
+    # Search by name (partial match)
+    # As a visitor
+    # When I visit an index page ('/parents') or ('/child_table_name')
+    # Then I see a text box to filter results by keyword
+    # When I type in a keyword that is an partial match of one or more of my records and press the Search button
+    # Then I only see records that are an partial match returned on the page
+    it 'has a text box to filter results by keywords' do 
+        Section.destroy_all
+        Item.destroy_all
+
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        visit '/sections' 
+        # save_and_open_page
+
+        expect(page).to have_content("Search using key word (partial match):")
+    end
+
+    it 'can search for Sections using key words that are partial matches' do 
+        Item.destroy_all
+        Section.destroy_all 
+        phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+        visit '/sections' 
+        # save_and_open_page
+
+        fill_in :search_partial, with: "phillys"
+        click_button "Search for Partial Matches" 
+        # save_and_open_page
+
+        expect(page).to have_content("Phillys")
+        expect(page).to have_content("Vegan Phillys")
+        expect(page).to_not have_content("Sides")
     end
 end
