@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
     def index 
-        if params[:search] != nil 
-            # binding.pry 
-            @items = Item.search(params[:search])
+        if params[:search_exact] != nil 
+            @items = Item.search_exact(params[:search_exact])
+        elsif params[:search_partial] != nil 
+            @items = Item.search_partial(params[:search_partial])
         else 
-            # binding.pry 
             @items = Item.needs_restock_only 
         end
     end

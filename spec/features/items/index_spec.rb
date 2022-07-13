@@ -320,7 +320,7 @@ RSpec.describe 'the child index page', type: :feature do
         expect(page).to have_content("Search using key word (exact match):")
     end
 
-    it 'can search for Items using key words' do 
+    it 'can search for Items using key words with an exact match' do 
         Item.destroy_all
         Section.destroy_all
 
@@ -336,13 +336,69 @@ RSpec.describe 'the child index page', type: :feature do
 
         visit '/items' 
 
-        fill_in :search, with: "pickle fries"
-        click_button "Search" 
+        fill_in :search_exact, with: "pickle fries"
+        click_button "Search for Exact Match" 
         # save_and_open_page
 
         expect(page).to have_content("Pickle Fries")
         expect(page).to_not have_content("Vegan Poutine")
         expect(page).to_not have_content("Soda")
         expect(page).to_not have_content("Beer")
+    end
+
+    # Search by name (partial match)
+    # As a visitor
+    # When I visit an index page ('/parents') or ('/child_table_name')
+    # Then I see a text box to filter results by keyword
+    # When I type in a keyword that is an partial match of one or more of my records and press the Search button
+    # Then I only see records that are an partial match returned on the page
+    it 'has a text box to filter results by keywords' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+        visit '/items' 
+        # save_and_open_page
+
+        expect(page).to have_content("Search using key word (partial match):")
+    end
+
+    it 'can search for Items using key words with a partial match' do 
+        Item.destroy_all
+        Section.destroy_all
+
+        sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+        drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+        pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+        poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+        fries = sides.items.create!(name: 'Fries', need_restock: true, price: 4)
+        cheese = sides.items.create!(name: 'Cheese Fries', need_restock: true, price: 7)
+
+        soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+        beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+
+        visit '/items' 
+
+        fill_in :search_partial, with: "fries"
+        click_button "Search for Partial Match" 
+        # save_and_open_page
+
+        expect(page).to have_content(pickles.name)
+        expect(page).to have_content(fries.name)
+        expect(page).to have_content(cheese.name)
+
+        expect(page).to_not have_content(poutine.name)
+        expect(page).to_not have_content(soda.name)
+        expect(page).to_not have_content(beer.name)
     end
 end

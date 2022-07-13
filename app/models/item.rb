@@ -17,7 +17,11 @@ class Item < ApplicationRecord
         Item.where("price >= #{min.to_i}")
     end
 
-    def self.search(key_word)
-        section = Item.where("LOWER(name) = ?", key_word.downcase)
+    def self.search_exact(key_word)
+        Item.where("LOWER(name) = ?", key_word.downcase)
+    end
+
+    def self.search_partial(key_word)
+        item = Item.where("LOWER(name) LIKE ?", "%#{key_word.downcase}%")
     end
 end
