@@ -6,8 +6,16 @@
 
 <b>Search using key word (exact match):</b> 
     <span><%= form_tag("/sections", method: :get) do %>
-        <%= text_field_tag(:search, params[:search]) %>
-        <%= submit_tag ("Search") %>
+        <%= text_field_tag(:search_exact, params[:search_exact]) %>
+        <%= submit_tag ("Search for Exact Matches") %>
+    <% end %>
+
+<br>
+
+<b>Search using key word (partial match):</b> 
+    <span><%= form_tag("/sections", method: :get) do %>
+        <%= text_field_tag(:search_partial, params[:search_partial]) %>
+        <%= submit_tag ("Search for Partial Matches") %>
     <% end %>
 
 <br>

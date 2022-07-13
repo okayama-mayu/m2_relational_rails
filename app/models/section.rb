@@ -32,7 +32,12 @@ class Section < ApplicationRecord
         .order(Arel.sql('count(sections.id) DESC'))
     end
 
-    def self.search(key_word)
-            section = Section.where("LOWER(name) = ?", key_word.downcase) 
+    def self.search_exact(key_word)
+        Section.where("LOWER(name) = ?", key_word.downcase) 
+    end
+
+    def self.search_partial(key_word)
+        Section.where("LOWER(name) LIKE ?", "%#{key_word.downcase}%")
+        # binding.pry 
     end
 end

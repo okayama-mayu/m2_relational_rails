@@ -76,7 +76,7 @@ RSpec.describe Item, type: :model do
             end
         end
 
-        describe '#search' do
+        describe '#search_exact' do
             it 'can return an Item based on a search' do
                 Item.destroy_all
                 Section.destroy_all 
@@ -90,10 +90,32 @@ RSpec.describe Item, type: :model do
                 soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
                 beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
 
-                expect(Item.search("Pickle Fries")).to eq [pickles]
-                expect(Item.search("vegan poutine")).to eq [poutine] 
-                expect(Item.search("soDa")).to eq [soda] 
-                expect(Item.search("BEER")).to eq [beer] 
+                expect(Item.search_exact("Pickle Fries")).to eq [pickles]
+                expect(Item.search_exact("vegan poutine")).to eq [poutine] 
+                expect(Item.search_exact("soDa")).to eq [soda] 
+                expect(Item.search_exact("BEER")).to eq [beer] 
+            end
+        end
+
+        describe '#search_partial' do 
+            it 'can return Items based on a partial search' do 
+                Item.destroy_all
+                Section.destroy_all
+
+                sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+                drinks = Section.create!(name: 'Drinks', vegan_options: true, labor_intensity: 1)
+
+                pickles = sides.items.create!(name: 'Pickle Fries', need_restock: true, price: 6)
+                poutine = sides.items.create!(name: 'Vegan Poutine', need_restock: true, price: 10)
+                fries = sides.items.create!(name: 'Fries', need_restock: true, price: 4)
+                cheese = sides.items.create!(name: 'Cheese Fries', need_restock: true, price: 7)
+
+                soda = drinks.items.create!(name: 'Soda', need_restock: true, price: 3)
+                beer = drinks.items.create!(name: 'Beer', need_restock: true, price: 5)
+
+                expect(Item.search_partial("fries")).to eq([pickles, fries, cheese])
+                expect(Item.search_partial("so")).to eq([soda])
+                expect(Item.search_partial("EE")).to eq([cheese, beer])
             end
         end
     end

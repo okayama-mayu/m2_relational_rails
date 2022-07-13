@@ -62,8 +62,8 @@ RSpec.describe Section, type: :model do
             end
         end
 
-        describe '#search' do
-            it 'can return a Section based on a search' do
+        describe '#search_exact' do
+            it 'can return a Section based on an exact search' do
                 Item.destroy_all
                 Section.destroy_all 
                 phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
@@ -72,9 +72,23 @@ RSpec.describe Section, type: :model do
 
                 sections = Section.all 
 
-                expect(sections.search("phillys")).to eq [phillys]
-                expect(sections.search("Sides")).to eq [sides] 
-                expect(sections.search("Vegan phillys")).to eq [vegan_phillys] 
+                expect(sections.search_exact("phillys")).to eq [phillys]
+                expect(sections.search_exact("Sides")).to eq [sides] 
+                expect(sections.search_exact("Vegan phillys")).to eq [vegan_phillys] 
+            end
+        end
+
+        describe '#search_partial' do 
+            it 'can return a Section based on a partial search' do
+                Item.destroy_all
+                Section.destroy_all 
+                phillys = Section.create!(name: 'Phillys', vegan_options: false, labor_intensity: 4)
+                sides = Section.create!(name: 'Sides', vegan_options: true, labor_intensity: 3)
+                vegan_phillys = Section.create!(name: 'Vegan Phillys', vegan_options: true, labor_intensity: 5)
+
+                expect(Section.search_partial("phillys")).to eq [phillys, vegan_phillys]
+                expect(Section.search_partial("side")).to eq [sides] 
+                expect(Section.search_partial("vegan")).to eq [vegan_phillys] 
             end
         end
     end
